@@ -1,0 +1,32 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+GET		/admin/									Admin.index
+*		/admin									module:crudsiena
+*		/										module:secure
+
+GET		/admin/new								Admin.form
+GET		/admin/myPosts/{id}						Admin.save
+POST	/admin/new								Admin.save
+POST	/admin/myPosts/{id}						Admin.save
+
+# Home page
+GET     /                                       Application.index
+
+# Ignore favicon requests
+GET     /favicon.ico                            404
+
+# Map static resources from the /app/public folder to the /public path
+GET     /public/                                staticDir:public
+
+GET		/posts/{<[0-9]+>id}						Application.Show
+GET     /posts/{tag}							Application.listTagged
+
+# Catch all
+*       /{controller}/{action}                  {controller}.{action}
+
+POST	/posts/{postId}/comments				Application.postComment
+GET		/captcha								Application.captcha
+
+

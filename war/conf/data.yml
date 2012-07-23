@@ -1,0 +1,122 @@
+# nobinmathew.com Data Copy
+
+User(Nobin):
+    email:          nobin.mathew@gmail.com
+    password:       asdfgh
+    fullname:       Nobin
+    isAdmin:        true   
+
+User(Mary):
+    email:          marymol@gmail.com
+    password:       qwerty
+    fullname:       Mary Mol
+    isAdmin:        false
+
+Tag(Embedded):
+    name:           Embedded
+
+Tag(Remapping):
+    name:           Remapping
+
+Tag(LLVM):
+    name:           LLVM
+
+Tag(Web):
+    name:           Web
+    
+Post(firstNobinPost):
+    title:          Into the Web Magic
+    postedAt:       2010-03-06
+    author:         Nobin
+    content:        >
+                    This is my first blog on nobinmathew.heroku.com. 
+                    Soon I will be moving to my registered domain nobinmathew.com.
+                    Heroku provides 5MB rubyonrails based hosting for free, it needs 
+                    credit card for activating my domain, so I am waiting for the arival
+                    of my credit card.Everything you see on this website is static, 
+                    I started this website without knowing anything about web developme
+                    basically I am a System Programmer, now I know HTML and CSS, 
+                    but for a working site I need to study ruby, rails, Sinatra and 
+                    Javascript, too long list and that means you need to wait for a interactive site.
+
+Post(secondNobinPost):
+    title:          Rescued
+    postedAt:       2010-06-13
+    author:         Nobin    
+    content:        >
+                    Finally I am here, without knowing much about ruby, rails and sinatra. 
+                    Thanks to Jekyll, GitHub and Disqus. May be in the next post I can 
+                    explain How to use Jekyll, GitHub and Disqus.
+
+Post(thirdNobinPost):
+    title:          Working with Clang and LLVM
+    postedAt:       2010-06-27
+    author:         Nobin    
+    content:        >
+                    LLVM is a new compiler framework being developed by University of illinois with financial
+                    help from Apple Inc. Clang is the compiler frontend for LLVM for parsing C, CPP, 
+                    objective C and objective CPP, both LLVM and Clang is architectured as a set of libraries.
+                    We can easily use these libraries to create various tools to play with source code, 
+                    one such tool is Clang static Analyzer.Lets get started, we can compile the libraries 
+                    by following the instructions given in Clang Getting Started. I started of with a small 
+                    program to parse my source code, most of the code in this parser is copied from cc1-main
+                    without the driver part, see below. Compiling this program is not that easy because of library 
+                    dependency, the one which worked for me is below.
+Post(fourthNobinPost):
+    title:          Address Remapping in Embedded Systems
+    postedAt:       2010-07-01
+    author:         Nobin    
+    content:         >
+                    Somebody asked me why address remapping is required in embedded systems, after some thoughts
+                    I got the answer. In every embedded system actual code resides in non-volatile memory and on
+                    reset different family of processors have different value in IP register, on arm it is 0h 
+                    and on Intel processors it is FFFFFFF0h (CoreBoot Developer Manual).
+
+                    Address Map
+                    !!!!!!!!!!!!!!!!!!!!!!!
+                    !          DRAM       !
+                    !!!!!!!!!!!!!!!!!!!!!!!
+                    !          NAND       !
+                    !!!!!!!!!!!!!!!!!!!!!!!
+                    !          NOR        !
+                    !!!!!!!!!!!!!!!!!!!!!!!
+                    !       Remap Area    !
+                    !!!!!!!!!!!!!!!!!!!!!!!
+
+                    If ARM system boots up from NOR, then NOR will be initially be in the REMAP AREA (0h), we can 
+                    access NOR either from remap area address range or NOR address range. If we are using u-boot 
+                    and linux, this time we will have u-boot exception vectors at the bottom of the NOR. When we do
+                    remap we will place DRAM in remap area, it is done by u-boot and that time u-boot will copy its
+                    exception vectors from NOR to DRAM.
+
+                    So the question is why we want to remap it and why we want to copy this exception vectors
+                    We shouldnt modify the original image, if we modify u-boot it will not work fine on next boot, 
+                    so dont write into NOR. Since we are not modifying the exception vectors (if u-boot uses interrupt,
+                    dynamic interrupt vectors uses either IRQ or FIQ exception vectors and branches inside it) there 
+                    is no need to modify the image, we can execute the code by copying into DRAM and executing from there,
+                    still keeping the exception vectors at NOR and without performing remap. Any problems, Yes think of 
+                    Linux, when Linux starts execution it needs its exception vectors at 0h (processor want this at 0h),
+                    since we cannt write into NOR we must remap DRAM to 0h and copy linux 
+                    exception vectors to 0h. Thats it, Happy Programming.Fuck you
+                    
+Comment(c1):
+    author:         Nobin
+    content:        >
+                    You are right !
+    postedAt:       2009-06-14
+    post:           firstNobinPost
+    
+Comment(c2):
+    author:         Nobin
+    content:        >
+                    I knew that ...
+    postedAt:       2009-06-15
+    post:           firstNobinPost    
+    
+Comment(c3):
+    author:         Nobin
+    content:        >
+                    This post is useless ?
+    postedAt:       2009-04-05
+    post:           secondNobinPost    
+

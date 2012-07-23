@@ -1,0 +1,56 @@
+*{Display post in one of the three modes: 'full', 'teaser' or 'home'}*
+
+<div class="post ${_as == 'teaser' ? 'teaser' : ''}">
+	<h2 class="post-title">
+		<a href="@{Application.Show(_post.id)}">${_post.title}</a>
+	</h2>
+	<div class="post-metadata">
+		<span class="post-author">by ${_post.author.fullname}</span>
+		<span class="post-date">${_post.postedAt.format('MMM dd yyyy')}</span>
+		#{if _as != 'full'}
+			<span class="post-comments">
+				&nbsp;|&nbsp; ${_post.findComments().size() ?:'no'}
+				comment${_post.findComments().size().pluralize()}
+				#{if _post.findComments().size()}
+					, latest by ${(_post.findComments())[0].author}
+				#{/if}
+			</span>
+		#{/if}
+		#{elseif _post.tags}
+			<span class="post-tags">
+				- Tagged
+				#{list items:_post.findTags(), as:'tag'}
+					<a href="@{Application.listTagged(tag.name)}">${tag}</a>${tag_isLast ? '': ', '}
+				#{/list}
+			</span>
+		#{/elseif}
+	</div>
+	#{if _as != 'teaser'}
+		<div class="post-content">
+			<div class="about">Detail: </div>
+			${_post.content.nl2br()}
+		</div>
+	#{/if}
+</div>
+#{if _as == 'full'}
+	<div class="comments">
+		<h3>
+			${_post.findComments().size() ?: 'no'}
+			comment${_post.findComments().size().pluralize()}
+		</h3>
+		
+		#{list items:_post.findComments(), as:'comment'}
+			<div class="comment">
+				<div class="comment-metadata">
+				<span class="comment-author">by ${comment.author}, </span>
+				<span class="comment-date"> ${comment.postedAt.format('MMM dd yyyy')}</span>
+			</div>
+			<div class="comment-content">
+				<div class="About">Detail: </div>
+				${comment.content.escape().nl2br()}
+			</div>
+		#{/list}
+	</div>
+#{/if}
+			
+		
